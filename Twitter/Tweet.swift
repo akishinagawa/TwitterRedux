@@ -96,7 +96,6 @@ class Tweet: NSObject {
         return tweets
     }
     
-    
     func tweetedTimeStampToString(tweetedDate: NSDate) -> String {
         let date = tweetedDate as Date
         let calendar = Calendar.current

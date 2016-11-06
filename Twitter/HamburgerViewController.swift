@@ -16,15 +16,23 @@ class HamburgerViewController: UIViewController {
     
     var originalContentViewLeftMarginConstraint:CGFloat!
     
-    var menuViewController: UIViewController!
-//        {
-//        didSet {
-//            view.layoutIfNeeded()
-//            
-//            menuView.addSubview(menuViewController.view)
-//        }
-//    }
-//    
+    var menuViewController: UIViewController! {
+        didSet(oldMenuViewController) {
+            view.layoutIfNeeded()
+            if oldMenuViewController != nil {
+                oldMenuViewController.willMove(toParentViewController: nil)
+                oldMenuViewController.view.removeFromSuperview()
+                oldMenuViewController.didMove(toParentViewController: nil)
+            }
+            
+            menuViewController.willMove(toParentViewController: nil)
+            menuViewController.view.removeFromSuperview()
+            menuViewController.didMove(toParentViewController: nil)
+            
+            menuView.addSubview(menuViewController.view)
+        }
+    }
+    
     
     var contentViewController: UIViewController! {
         didSet(oldContentViewController) {
@@ -48,22 +56,7 @@ class HamburgerViewController: UIViewController {
     }
     
     override func viewDidLoad() {
-        super.viewDidLoad()
-
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let menuViewController = storyboard.instantiateViewController(withIdentifier: "MenuViewController") as! MenuViewController
-        
-        menuViewController.hamburgerViewController = self
-        
-        self.menuViewController = menuViewController
-        
-        menuView.addSubview(menuViewController.view)
-       
-        
-        
-        
-        
-        
+        super.viewDidLoad()  
     }
     
     override func didReceiveMemoryWarning() {
