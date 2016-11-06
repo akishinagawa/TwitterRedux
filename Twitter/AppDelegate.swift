@@ -17,12 +17,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
+        
+//        let hamburgerViewController = window!.rootViewController as! HamburgerViewController
+//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//        let menuViewController = storyboard.instantiateViewController(withIdentifier: "MenuViewController")
+//        
+//        
+//        hamburgerViewController.menuVIewController = menuViewController
+//        
+        
+        
         if User.currentUser != nil {
-            print("There is a current user.")
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let tweetsNavigationController = storyboard.instantiateViewController(withIdentifier: "TweetsNavigationController")
+            let hamburgerViewController = storyboard.instantiateViewController(withIdentifier: "HamburgerViewController")
             
-            window?.rootViewController = tweetsNavigationController
+            window?.rootViewController = hamburgerViewController
         }
         
         NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: User.userDidLogoutNotification), object: nil, queue: OperationQueue.main) { (notification: Notification) -> Void in
@@ -32,6 +41,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.window?.rootViewController = initialController
         }
 
+        
+        // Nvigation color set
         UINavigationBar.appearance().tintColor = UIColor.init(red: 0.11, green: 0.63, blue: 0.95, alpha: 1.0)
         UINavigationBar.appearance().barTintColor = UIColor.white
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName : UIColor.init(red: 0.11, green: 0.63, blue: 0.95, alpha: 1.0)]

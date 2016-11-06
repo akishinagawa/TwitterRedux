@@ -1,16 +1,15 @@
 //
-//  LoginViewController.swift
+//  MentionsViewController.swift
 //  Twitter
 //
-//  Created by Akifumi Shinagawa on 10/29/16.
+//  Created by Akifumi Shinagawa on 11/5/16.
 //  Copyright © 2016 codepath. All rights reserved.
 //
 
 import UIKit
 
+class MentionsViewController: UIViewController {
 
-class LoginViewController: UIViewController {
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -22,17 +21,7 @@ class LoginViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func onLoginButton(_ sender: AnyObject) {
-        TwitterClient.sharedInstance?.login(success: {() -> ()  in
-            self.performSegue(withIdentifier: "toHamburgerViewSegue", sender: nil)
-        }, failure: {(error: Error) -> () in
-            print("Login Error: \(error.localizedDescription)")
-        })
-    }
 
-    
-
-    
     /*
     // MARK: - Navigation
 
