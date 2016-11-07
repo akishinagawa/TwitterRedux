@@ -31,7 +31,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             self.window?.rootViewController = initialController
         }
-
         
         // Nvigation color set
         UINavigationBar.appearance().tintColor = UIColor.init(red: 0.11, green: 0.63, blue: 0.95, alpha: 1.0)

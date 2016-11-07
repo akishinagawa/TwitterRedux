@@ -202,7 +202,6 @@ class TweetsViewController: UIViewController, TweetWriteViewControllerrDelegate,
             tweetsTableView.dataSource = profileTableViewObject
             tweetsTableView.delegate = profileTableViewObject
             
-            
             TwitterClient.sharedInstance?.userStatus(userId: targetScreenName, success: { (userInfo: TargetUserInfo) -> () in
                 self.targetUserInfo = userInfo
                 self.profileTableViewObject.targetUserInfo = userInfo
@@ -218,17 +217,7 @@ class TweetsViewController: UIViewController, TweetWriteViewControllerrDelegate,
             }, failure: { (error:Error) -> () in
                 print("error: \(error.localizedDescription)")
             })
-            
-            
-            
         }
-        
-        
-        
-        
-        
     }
-    
-    
-    
+ 
 }

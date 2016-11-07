@@ -80,7 +80,6 @@ class Tweet: NSObject {
         if let timestampString = timestampString {
             tweetedTimeStamp = formatter.date(from: timestampString) as NSDate?
             timeStampString = tweetedTimeStampToString(tweetedDate: tweetedTimeStamp!)
-            
         }
         
         tweetId = tweetData["id_str"] as? String

@@ -53,7 +53,6 @@ class HamburgerViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
     
-    
     func setTimelineMode(mode: String) {
         switch mode {
             case "Home":
@@ -75,7 +74,6 @@ class HamburgerViewController: UIViewController {
             self.contentViewLeftMarginConstraint.constant = 0
             self.view.layoutIfNeeded()
         })
-        
     }
     
     @IBAction func onPanGesture(_ sender: UIPanGestureRecognizer) {
