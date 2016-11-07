@@ -8,14 +8,21 @@
 
 import UIKit
 
-class HomeTabelViewObject: NSObject, UITableViewDataSource, UITableViewDelegate {
+@objc protocol HomeTabelViewObjectDelegate {
+    @objc optional func homeTabelViewObject(homeTabelViewObject: HomeTabelViewObject, userScreenName value: String)
+}
+
+class HomeTabelViewObject: NSObject, UITableViewDataSource, UITableViewDelegate, TweetsTableViewCellDelegate {
     
     var tweets: [Tweet]?
     var tableView:UITableView!
+    
+    weak var delegate: HomeTabelViewObjectDelegate?
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TweetsTableViewCell", for: indexPath) as! TweetsTableViewCell
         cell.tweet = tweets?[indexPath.row]
+        cell.delegate = self
         
         return cell
     }
@@ -29,4 +36,7 @@ class HomeTabelViewObject: NSObject, UITableViewDataSource, UITableViewDelegate 
         }
     }
     
+    func tweetsTableViewCell(tweetsTableViewCell: TweetsTableViewCell, userScreenName value: String) {
+        delegate?.homeTabelViewObject?(homeTabelViewObject: self, userScreenName: value)
+    } 
 }

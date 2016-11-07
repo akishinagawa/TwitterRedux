@@ -250,16 +250,13 @@ Surf as many as possible in sacrid NorCal.</string>
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="123"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="O8l-YF-wYb">
+                                                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="O8l-YF-wYb">
                                                     <rect key="frame" x="10" y="27" width="48" height="48"/>
                                                     <gestureRecognizers/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="48" id="1s6-qI-wFv"/>
                                                         <constraint firstAttribute="height" constant="48" id="x63-js-Ilg"/>
                                                     </constraints>
-                                                    <connections>
-                                                        <outletCollection property="gestureRecognizers" destination="Bir-jC-1sS" appends="YES" id="v77-tP-2AC"/>
-                                                    </connections>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="retweet-action" translatesAutoresizingMaskIntoConstraints="NO" id="07w-iy-eTS">
                                                     <rect key="frame" x="46" y="8" width="14" height="15"/>
@@ -559,11 +556,6 @@ Surf as many as possible in sacrid NorCal.</string>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Xi-Ef-teC" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="Bir-jC-1sS">
-                    <connections>
-                        <action selector="uwerImageTapped:" destination="Knc-rF-7e4" id="Wph-wy-gXI"/>
-                    </connections>
-                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1680.8" y="138.98050974512745"/>
         </scene>

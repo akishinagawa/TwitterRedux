@@ -15,7 +15,7 @@ The following **required** functionality is completed:
 - [x] Contains a section with the users basic stats: # tweets, # following, # followers
 - [x] Shows the user timeline
 - [x] Home Timeline
-- [ ] Tapping on a user image should bring up that user's profile page
+- [x] Tapping on a user image should bring up that user's profile page
 
 The following **optional** features are implemented:
 

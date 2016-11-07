@@ -21,7 +21,13 @@ class ProfileTableViewCell: UITableViewCell {
 
     var targetUserInfo: TargetUserInfo! {
         didSet {
-            bannerImage.setImageWith(targetUserInfo.userBannerImageUrl!, placeholderImage: nil)
+            if targetUserInfo.userBannerImageUrl != nil {
+                bannerImage.setImageWith(targetUserInfo.userBannerImageUrl!, placeholderImage: nil)
+                bannerImage.isHidden = false
+            }
+            else {
+                bannerImage.isHidden = true
+            }
             userImage.setImageWith(targetUserInfo.userImageUrl!, placeholderImage: nil)
  
             userNameLabel.text = targetUserInfo.userName

@@ -10,6 +10,10 @@ import UIKit
 import AFNetworking
 import Foundation
 
+@objc protocol TweetsTableViewCellDelegate {
+    @objc optional func tweetsTableViewCell(tweetsTableViewCell: TweetsTableViewCell, userScreenName value: String)
+}
+
 class TweetsTableViewCell: UITableViewCell {
 
     @IBOutlet weak var retweetedByIcon: UIImageView!
@@ -30,6 +34,8 @@ class TweetsTableViewCell: UITableViewCell {
     
     @IBOutlet weak var reweetedCountLabel: UILabel!
     @IBOutlet weak var likedCountLabel: UILabel!
+    
+    weak var delegate: TweetsTableViewCellDelegate?
     
     var tweet: Tweet! {
         didSet {
@@ -84,9 +90,18 @@ class TweetsTableViewCell: UITableViewCell {
 
         tweeterImage.layer.cornerRadius = 6
         tweeterImage.clipsToBounds = true
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(TweetsTableViewCell.userImageTapped))
+        tapGesture.delegate = self;
+        tweeterImage.addGestureRecognizer(tapGesture)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
+    }
+    
+    func userImageTapped() {
+        print("tweet.userScreenName == \(tweet.userScreenName)")
+        delegate?.tweetsTableViewCell?(tweetsTableViewCell: self, userScreenName: tweet.userScreenName!)
     }
 }

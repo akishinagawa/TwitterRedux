@@ -12,8 +12,7 @@ enum TimelineMode: String {
     case Home, Profile, Mentions
 }
 
-
-class TweetsViewController: UIViewController, TweetWriteViewControllerrDelegate {
+class TweetsViewController: UIViewController, TweetWriteViewControllerrDelegate, HomeTabelViewObjectDelegate, ProfileTableViewObjectDelegate, MentionsTableViewObjectDelegate {
 
     var tweets: [Tweet]?
     var targetUserInfo: TargetUserInfo!
@@ -41,7 +40,6 @@ class TweetsViewController: UIViewController, TweetWriteViewControllerrDelegate 
 
         tweetsTableView.rowHeight = UITableViewAutomaticDimension
         tweetsTableView.estimatedRowHeight = 120
-        
 
         self.refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refreshControlAction(refreshControl:)), for: UIControlEvents.valueChanged)
@@ -55,22 +53,16 @@ class TweetsViewController: UIViewController, TweetWriteViewControllerrDelegate 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    
-    @IBAction func uwerImageTapped(_ sender: UITapGestureRecognizer) {
-        
-        print()
-        
-    }
 
-    
     @IBAction func onLogoutButton(_ sender: AnyObject) {
         TwitterClient.sharedInstance?.logout()
     }
 
-    func updateTimeline () {
+    func updateTimeline() {
         if currentTimelineMode == .Home {
             if homeTableViewObject == nil {
                 homeTableViewObject = HomeTabelViewObject()
+                homeTableViewObject.delegate = self
             }
             
             homeTableViewObject.tweets = tweets
@@ -82,6 +74,7 @@ class TweetsViewController: UIViewController, TweetWriteViewControllerrDelegate 
         else if currentTimelineMode == .Profile {
             if profileTableViewObject == nil {
                 profileTableViewObject = ProfileTableViewObject()
+                profileTableViewObject.delegate = self
             }
             
             profileTableViewObject.tweets = tweets
@@ -94,6 +87,7 @@ class TweetsViewController: UIViewController, TweetWriteViewControllerrDelegate 
             
             if mentionsTableViewObject == nil {
                 mentionsTableViewObject = MentionsTableViewObject()
+                mentionsTableViewObject.delegate = self
             }
             
             mentionsTableViewObject.tweets = tweets
@@ -171,8 +165,63 @@ class TweetsViewController: UIViewController, TweetWriteViewControllerrDelegate 
         }
     }
     
-    func TweetWriteViewController(tweetWriteViewController: TweetWriteViewController, returnedData:AnyObject) {
+    func TweetWriteViewController(tweetWriteViewController: TweetWriteViewController, returnedData:AnyObject) {}
+    
+    func homeTabelViewObject(homeTabelViewObject: HomeTabelViewObject, userScreenName value: String) {
+        switchToProfileMode(withUserScreenName: value)
+    }
+    
+    func profileTableViewObject(profileTableViewObject: ProfileTableViewObject, userScreenName value: String) {
+        switchToProfileMode(withUserScreenName: value)
+    }
+    
+    func mentionsTableViewObject(mentionsTableViewObject: MentionsTableViewObject, userScreenName value: String) {
+        switchToProfileMode(withUserScreenName: value)
+    }
+    
+    func switchToProfileMode(withUserScreenName targetScreenName: String) {
+        
+        print(targetScreenName)
+        
+        if User.currentUser?.screenName != targetScreenName {
+            if profileTableViewObject == nil {
+                profileTableViewObject = ProfileTableViewObject()
+                profileTableViewObject.delegate = self
+            }
+            
+            profileTableViewObject.tweets = tweets
+            profileTableViewObject.tableView = tweetsTableView
+            
+            tweetsTableView.dataSource = profileTableViewObject
+            tweetsTableView.delegate = profileTableViewObject
+            
+            
+            TwitterClient.sharedInstance?.userStatus(userId: targetScreenName, success: { (userInfo: TargetUserInfo) -> () in
+                self.targetUserInfo = userInfo
+                self.profileTableViewObject.targetUserInfo = userInfo
+                
+                TwitterClient.sharedInstance?.userTweetsTimeLine(userId: targetScreenName, success: { (tweets: [Tweet]) -> () in
+                    self.tweets = tweets
+                    self.profileTableViewObject.tweets = tweets
+                    self.tweetsTableView.reloadData()
+                    self.refreshControl.endRefreshing()
+                }, failure: { (error:Error) -> () in
+                    print("error: \(error.localizedDescription)")
+                })
+            }, failure: { (error:Error) -> () in
+                print("error: \(error.localizedDescription)")
+            })
+            
+            
+            
+        }
+        
+        
+        
+        
         
     }
+    
+    
     
 }
