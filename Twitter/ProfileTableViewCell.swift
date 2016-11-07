@@ -27,9 +27,9 @@ class ProfileTableViewCell: UITableViewCell {
             userNameLabel.text = targetUserInfo.userName
             screenNameLabel.text = targetUserInfo.userScreenName
             
-            tweetsCountLabel.text = String(describing: targetUserInfo.tweetsCount)
-            followingCountLabel.text = String(describing: targetUserInfo.fowllowingCount)
-            followersCountLabel.text = String(describing: targetUserInfo.followersCount)
+            tweetsCountLabel.text = String(describing: targetUserInfo.tweetsCount!)
+            followingCountLabel.text = String(describing: targetUserInfo.fowllowingCount!)
+            followersCountLabel.text = String(describing: targetUserInfo.followersCount!)
         }
     }
     
@@ -42,6 +42,5 @@ class ProfileTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
     }
 }
