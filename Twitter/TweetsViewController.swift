@@ -31,7 +31,6 @@ class TweetsViewController: UIViewController, TweetWriteViewControllerrDelegate 
     
     @IBOutlet weak var tweetsTableView: UITableView!
     
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tweetsTableView.reloadData()
@@ -57,10 +56,16 @@ class TweetsViewController: UIViewController, TweetWriteViewControllerrDelegate 
         super.didReceiveMemoryWarning()
     }
     
+    @IBAction func uwerImageTapped(_ sender: UITapGestureRecognizer) {
+        
+        print()
+        
+    }
+
+    
     @IBAction func onLogoutButton(_ sender: AnyObject) {
         TwitterClient.sharedInstance?.logout()
     }
-
 
     func updateTimeline () {
         if currentTimelineMode == .Home {

@@ -12,11 +12,8 @@ import Foundation
 
 class TweetsTableViewCell: UITableViewCell {
 
-
     @IBOutlet weak var retweetedByIcon: UIImageView!
-    
-    
-    
+
     @IBOutlet weak var retweetIcon: UIImageView!
     @IBOutlet weak var retweetIconOn: UIImageView!
     @IBOutlet weak var likeIcon: UIImageView!

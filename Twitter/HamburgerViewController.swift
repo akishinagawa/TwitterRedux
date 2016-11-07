@@ -17,8 +17,7 @@ class HamburgerViewController: UIViewController {
     @IBOutlet weak var contentViewLeftMarginConstraint: NSLayoutConstraint!
     
     var currentTimelineMode:TimelineMode = .Home
-    
-    
+  
     var originalContentViewLeftMarginConstraint:CGFloat!
     
     var menuViewController: UIViewController! {
@@ -38,28 +37,8 @@ class HamburgerViewController: UIViewController {
         }
     }
     
-    
     var contentViewController: UIViewController!
-//        {
-//        didSet(oldContentViewController) {
-//            view.layoutIfNeeded()
-//            
-//            if oldContentViewController != nil {
-//                oldContentViewController.willMove(toParentViewController: nil)
-//                oldContentViewController.view.removeFromSuperview()
-//                oldContentViewController.didMove(toParentViewController: nil)
-//            }
-//            
-//            contentViewController.willMove(toParentViewController: self)
-//            contentView.addSubview(contentViewController.view)
-//            contentViewController.didMove(toParentViewController: self)
-//            
-//            UIView.animate(withDuration: 0.3, animations: {
-//                self.contentViewLeftMarginConstraint.constant = 0
-//                self.view.layoutIfNeeded()
-//            })
-//        }
-//    }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -98,17 +77,6 @@ class HamburgerViewController: UIViewController {
         })
         
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
     
     @IBAction func onPanGesture(_ sender: UIPanGestureRecognizer) {
         let translation = sender.translation(in: view)
