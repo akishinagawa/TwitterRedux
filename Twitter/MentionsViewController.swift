@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MentionsViewController: UIViewController {
+class MentionsViewController: TweetsViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

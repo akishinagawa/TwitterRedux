@@ -13,12 +13,12 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBOutlet weak var menuTableView: UITableView!
     
     private var tweetsNavigationController:UIViewController!
-    private var profileNavigationController:UIViewController!
-    private var mentionsNavigationController:UIViewController!
+//    private var profileNavigationController:UIViewController!
+//    private var mentionsNavigationController:UIViewController!
     
-    var viewControllers:[UIViewController] = []
+//    var viewControllers:[UIViewController] = []
     var hamburgerViewController: HamburgerViewController!
-    var titles = ["Home Timeline", "Profile", "Mentions"]
+    var titles = ["Home", "Profile", "Mentions"]
  
     
     override func viewDidLoad() {
@@ -27,16 +27,16 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
         menuTableView.dataSource = self
         menuTableView.delegate = self
         
-        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
-        tweetsNavigationController = storyBoard.instantiateViewController(withIdentifier: "TweetsNavigationController")
-        profileNavigationController = storyBoard.instantiateViewController(withIdentifier: "ProfileNavigationController")
-        mentionsNavigationController = storyBoard.instantiateViewController(withIdentifier: "MentionsNavigationController")
-        
-        viewControllers.append(tweetsNavigationController)
-        viewControllers.append(profileNavigationController)
-        viewControllers.append(mentionsNavigationController)
-        
-        hamburgerViewController.contentViewController = tweetsNavigationController
+//        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+//        tweetsNavigationController = storyBoard.instantiateViewController(withIdentifier: "TweetsNavigationController")
+//        profileNavigationController = storyBoard.instantiateViewController(withIdentifier: "ProfileNavigationController")
+//        mentionsNavigationController = storyBoard.instantiateViewController(withIdentifier: "MentionsNavigationController")
+//        
+//        viewControllers.append(tweetsNavigationController)
+//        viewControllers.append(profileNavigationController)
+//        viewControllers.append(mentionsNavigationController)
+//        
+//        hamburgerViewController.contentViewController = tweetsNavigationController
     }
 
     override func didReceiveMemoryWarning() {
@@ -45,7 +45,7 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewControllers.count
+        return titles.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -59,8 +59,10 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         menuTableView.deselectRow(at: indexPath, animated: true)
         
-        hamburgerViewController.contentViewController = viewControllers[indexPath.row]
+//        hamburgerViewController.contentViewController = viewControllers[indexPath.row]
+        hamburgerViewController.setTimelineMode(mode: titles[indexPath.row])
         
+//        hamburgerViewController.contentViewController.setTimelineMode(mode: titles[indexPath.row])
     }
     
     

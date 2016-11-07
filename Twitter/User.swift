@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 class User: NSObject {
 
     var name: String?

@@ -20,6 +20,9 @@ struct LoginInfo {
     
     static let VERIFY_CREDENTIAL_URL = "1.1/account/verify_credentials.json"
     static let HOME_TIMELINE_URL = "1.1/statuses/home_timeline.json"
+    static let USER_STATUS_URL = "1.1/users/show.json?screen_name="
+    static let USER_TIMELINE_URL = "1.1/statuses/user_timeline.json?screen_name="
+    static let MENTIONS_TIMELINE_URL = "1.1/statuses/mentions_timeline.json"
     
     static let RETWEET_URL_PREFIX = "1.1/statuses/retweet/"
     static let UNRETWEET_URL_PREFIX = "1.1/statuses/unretweet/"
@@ -85,10 +88,73 @@ class TwitterClient: BDBOAuth1SessionManager {
             let tweets = Tweet.tweetWithArray(dictionaries: dictionaries)
             
                 success(tweets)
-            
             }, failure: { (task: URLSessionDataTask?, error: Error) -> Void in
-                
                 failure(error)
+        })
+    }
+ 
+    
+    
+    func userStatus(userId: String, success: @escaping (TargetUserInfo) -> (), failure: @escaping (Error) -> ()) {
+        let encodedUserIdString = userId.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
+        let userStatusURLString:String = LoginInfo.USER_STATUS_URL + encodedUserIdString!
+        get(userStatusURLString, parameters: nil, progress: nil, success: { (task: URLSessionDataTask, resposne: Any?) -> Void in
+            
+            print("--------------->>")
+            print(resposne)
+            print("--------------->>")
+
+            let dictionay = resposne as! NSDictionary
+            let targetUserInfo = TargetUserInfo(dictionary: dictionay)
+            
+            success(targetUserInfo)
+        }, failure: { (task: URLSessionDataTask?, error: Error) -> Void in
+            failure(error)
+        })
+    }
+    
+    
+    
+    
+    func userTweetsTimeLine(userId: String, success: @escaping ([Tweet]) -> (), failure: @escaping (Error) -> ()) {
+        
+        
+        let encodedUserIdString = userId.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
+        let userTimelineURLString:String = LoginInfo.USER_TIMELINE_URL + encodedUserIdString!
+        
+        
+        
+        get(userTimelineURLString, parameters: nil, progress: nil, success: { (task: URLSessionDataTask, resposne: Any?) -> Void in
+            
+            print("--------------->>")
+            print(resposne)
+            
+            let dictionaries = resposne as! [NSDictionary]
+            let tweets = Tweet.tweetWithArray(dictionaries: dictionaries)
+            
+            success(tweets)
+        }, failure: { (task: URLSessionDataTask?, error: Error) -> Void in
+            failure(error)
+        })
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    func mentionsTimeLine(success: @escaping ([Tweet]) -> (), failure: @escaping (Error) -> ()) {
+        get(LoginInfo.MENTIONS_TIMELINE_URL, parameters: nil, progress: nil, success: { (task: URLSessionDataTask, resposne: Any?) -> Void in
+            let dictionaries = resposne as! [NSDictionary]
+            let tweets = Tweet.tweetWithArray(dictionaries: dictionaries)
+            
+            success(tweets)
+        }, failure: { (task: URLSessionDataTask?, error: Error) -> Void in
+            failure(error)
         })
     }
 
@@ -101,7 +167,6 @@ class TwitterClient: BDBOAuth1SessionManager {
         }, failure: { (task:URLSessionDataTask?, error:Error) -> Void in
             print("Request Access Token Failed. - error: \(error.localizedDescription)")
             failure(error)
-            
         })
     }
     
@@ -110,10 +175,10 @@ class TwitterClient: BDBOAuth1SessionManager {
         let tweetURLString:String = LoginInfo.STATUS_UPDATE_URL + "status=" + encodedTweetString!
         
         post(tweetURLString, parameters: nil, progress: nil, success: { (task:URLSessionDataTask, response: Any?) -> Void in
-                success()
-            }, failure: { (task:URLSessionDataTask?, error:Error) -> Void in
-                print("Send Tweet Failed. - error: \(error.localizedDescription)")
-                failure(error)
+            success()
+        }, failure: { (task:URLSessionDataTask?, error:Error) -> Void in
+            print("Send Tweet Failed. - error: \(error.localizedDescription)")
+            failure(error)
         })
     }
     
@@ -122,10 +187,10 @@ class TwitterClient: BDBOAuth1SessionManager {
         let replyTweetURLString:String = LoginInfo.STATUS_UPDATE_URL + "status=" + encodedStatusString! + "&in_reply_to_status_id=" + targetId
 
         post(replyTweetURLString, parameters: nil, progress: nil, success: { (task:URLSessionDataTask, response: Any?) -> Void in
-                success()
-            }, failure: { (task:URLSessionDataTask?, error:Error) -> Void in
-                print("Send Reply Failed. - error: \(error.localizedDescription)")
-                failure(error)
+            success()
+        }, failure: { (task:URLSessionDataTask?, error:Error) -> Void in
+            print("Send Reply Failed. - error: \(error.localizedDescription)")
+            failure(error)
         })
     }
     
@@ -133,10 +198,10 @@ class TwitterClient: BDBOAuth1SessionManager {
         let retweetURLString:String = LoginInfo.RETWEET_URL_PREFIX + targetId + LoginInfo.RETWEET_URL_SUFFIX
 
         post(retweetURLString, parameters: nil, progress: nil, success: { (task:URLSessionDataTask, response: Any?) -> Void in
-                success()
-            }, failure: { (task:URLSessionDataTask?, error:Error) -> Void in
-                print("Send Retweet Failed. - error: \(error.localizedDescription)")
-                failure(error)
+            success()
+        }, failure: { (task:URLSessionDataTask?, error:Error) -> Void in
+            print("Send Retweet Failed. - error: \(error.localizedDescription)")
+            failure(error)
         })
     }
     
@@ -145,29 +210,31 @@ class TwitterClient: BDBOAuth1SessionManager {
         
         post(unretweetURLString, parameters: nil, progress: nil, success: { (task:URLSessionDataTask, response: Any?) -> Void in
             success()
-            }, failure: { (task:URLSessionDataTask?, error:Error) -> Void in
-                print("Send UNretweet Failed. - error: \(error.localizedDescription)")
-                failure(error)
+        }, failure: { (task:URLSessionDataTask?, error:Error) -> Void in
+            print("Send UNretweet Failed. - error: \(error.localizedDescription)")
+            failure(error)
         })
     }
  
     func sendFavorite(targetId: String, success: @escaping () -> (), failure: @escaping (Error) -> ()) {
         let favoriteURLString:String = LoginInfo.FAVORITE_URL_PREFIX + targetId
+        
         post(favoriteURLString, parameters: nil, progress: nil, success: { (task:URLSessionDataTask, response: Any?) -> Void in
             success()
-            }, failure: { (task:URLSessionDataTask?, error:Error) -> Void in
-                print("Send Favorite Failed. - error: \(error.localizedDescription)")
-                failure(error)
+        }, failure: { (task:URLSessionDataTask?, error:Error) -> Void in
+            print("Send Favorite Failed. - error: \(error.localizedDescription)")
+            failure(error)
         })
     }
     
     func sendUnfavorite(targetId: String, success: @escaping () -> (), failure: @escaping (Error) -> ()) {
         let unfavoriteURLString:String = LoginInfo.UNFAVORITE_URL_PREFIX + targetId
+        
         post(unfavoriteURLString, parameters: nil, progress: nil, success: { (task:URLSessionDataTask, response: Any?) -> Void in
             success()
-            }, failure: { (task:URLSessionDataTask?, error:Error) -> Void in
-                print("Send Unfavorite Failed. - error: \(error.localizedDescription)")
-                failure(error)
+        }, failure: { (task:URLSessionDataTask?, error:Error) -> Void in
+            print("Send Unfavorite Failed. - error: \(error.localizedDescription)")
+            failure(error)
         })
     }
 

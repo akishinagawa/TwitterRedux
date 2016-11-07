@@ -8,11 +8,16 @@
 
 import UIKit
 
+
+
 class HamburgerViewController: UIViewController {
 
     @IBOutlet weak var menuView: UIView!
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var contentViewLeftMarginConstraint: NSLayoutConstraint!
+    
+    var currentTimelineMode:TimelineMode = .Home
+    
     
     var originalContentViewLeftMarginConstraint:CGFloat!
     
@@ -34,35 +39,76 @@ class HamburgerViewController: UIViewController {
     }
     
     
-    var contentViewController: UIViewController! {
-        didSet(oldContentViewController) {
-            view.layoutIfNeeded()
-            
-            if oldContentViewController != nil {
-                oldContentViewController.willMove(toParentViewController: nil)
-                oldContentViewController.view.removeFromSuperview()
-                oldContentViewController.didMove(toParentViewController: nil)
-            }
-            
-            contentViewController.willMove(toParentViewController: self)
-            contentView.addSubview(contentViewController.view)
-            contentViewController.didMove(toParentViewController: self)
-            
-            UIView.animate(withDuration: 0.3, animations: {
-                self.contentViewLeftMarginConstraint.constant = 0
-                self.view.layoutIfNeeded()
-            })
-        }
-    }
+    var contentViewController: UIViewController!
+//        {
+//        didSet(oldContentViewController) {
+//            view.layoutIfNeeded()
+//            
+//            if oldContentViewController != nil {
+//                oldContentViewController.willMove(toParentViewController: nil)
+//                oldContentViewController.view.removeFromSuperview()
+//                oldContentViewController.didMove(toParentViewController: nil)
+//            }
+//            
+//            contentViewController.willMove(toParentViewController: self)
+//            contentView.addSubview(contentViewController.view)
+//            contentViewController.didMove(toParentViewController: self)
+//            
+//            UIView.animate(withDuration: 0.3, animations: {
+//                self.contentViewLeftMarginConstraint.constant = 0
+//                self.view.layoutIfNeeded()
+//            })
+//        }
+//    }
     
     override func viewDidLoad() {
-        super.viewDidLoad()  
+        super.viewDidLoad()
+        
+        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+        let tweetsNavigationController = storyBoard.instantiateViewController(withIdentifier: "TweetsNavigationController")
+        contentViewController = tweetsNavigationController
+        contentView.addSubview(contentViewController.view)
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
+    
+    
+    func setTimelineMode(mode: String) {
+        switch mode {
+            case "Home":
+                currentTimelineMode = .Home
+            case "Profile":
+                currentTimelineMode = .Profile
+            case "Mentions":
+                currentTimelineMode = .Mentions
+            default:
+                currentTimelineMode = .Home
+        }
+
+        // update tweetsViewController
+        let tweetsViewVontroller = (contentViewController as! UINavigationController).topViewController as! TweetsViewController
+        tweetsViewVontroller.currentTimelineMode = self.currentTimelineMode
+
+        // close menu view
+        UIView.animate(withDuration: 0.3, animations: {
+            self.contentViewLeftMarginConstraint.constant = 0
+            self.view.layoutIfNeeded()
+        })
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
     
     @IBAction func onPanGesture(_ sender: UIPanGestureRecognizer) {
         let translation = sender.translation(in: view)
