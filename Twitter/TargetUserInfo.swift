@@ -15,6 +15,9 @@ class TargetUserInfo: NSObject {
     var userImageUrlString: String?
     var userImageUrl: URL?
     
+    var userBannerUrlString: String?
+    var userBannerImageUrl: URL?
+    
     var tweetsCount: Int?
     var fowllowingCount: Int?
     var followersCount: Int?
@@ -32,6 +35,13 @@ class TargetUserInfo: NSObject {
             userImageUrl = URL(string: userImageUrlString!)
         } else {
             userImageUrl = nil
+        }
+        
+        userBannerUrlString = dictionary["profile_banner_url"] as? String
+        if userBannerUrlString != nil {
+            userBannerImageUrl = URL(string: userBannerUrlString!)
+        } else {
+            userBannerImageUrl = nil
         }
 
         tweetsCount = dictionary["statuses_count"] as? Int

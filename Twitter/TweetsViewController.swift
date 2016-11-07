@@ -147,13 +147,13 @@ class TweetsViewController: UIViewController, TweetWriteViewControllerrDelegate 
         }
         else if currentTimelineMode == .Profile {
        
-            let userID = "@akishinagawa" // TODO: get it!!!
+            let currentLoggedinUserID = User.currentUser?.screenName
 
-            TwitterClient.sharedInstance?.userStatus(userId: userID, success: { (userInfo: TargetUserInfo) -> () in
+            TwitterClient.sharedInstance?.userStatus(userId: currentLoggedinUserID!, success: { (userInfo: TargetUserInfo) -> () in
                 self.targetUserInfo = userInfo
                 self.profileTableViewObject.targetUserInfo = userInfo
 
-                TwitterClient.sharedInstance?.userTweetsTimeLine(userId: userID, success: { (tweets: [Tweet]) -> () in
+                TwitterClient.sharedInstance?.userTweetsTimeLine(userId: currentLoggedinUserID!, success: { (tweets: [Tweet]) -> () in
                     self.tweets = tweets
                     self.profileTableViewObject.tweets = tweets
                     self.tweetsTableView.reloadData()

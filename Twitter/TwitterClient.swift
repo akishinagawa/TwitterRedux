@@ -9,7 +9,6 @@
 import UIKit
 import BDBOAuth1Manager
 
-
 struct LoginInfo {
     static let TWITTER_URL_STRING = "https://api.twitter.com"
     static let COMSUMER_KEY = "DgAvzctGL7Bmqiju8V38drglL"
@@ -32,7 +31,6 @@ struct LoginInfo {
     
     static let FAVORITE_URL_PREFIX = "1.1/favorites/create.json?id="
     static let UNFAVORITE_URL_PREFIX = "1.1/favorites/destroy.json?id="
-
 }
 
 class TwitterClient: BDBOAuth1SessionManager {
@@ -92,43 +90,26 @@ class TwitterClient: BDBOAuth1SessionManager {
                 failure(error)
         })
     }
- 
-    
     
     func userStatus(userId: String, success: @escaping (TargetUserInfo) -> (), failure: @escaping (Error) -> ()) {
         let encodedUserIdString = userId.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
         let userStatusURLString:String = LoginInfo.USER_STATUS_URL + encodedUserIdString!
+        
         get(userStatusURLString, parameters: nil, progress: nil, success: { (task: URLSessionDataTask, resposne: Any?) -> Void in
-            
-            print("--------------->>")
-            print(resposne)
-            print("--------------->>")
-
             let dictionay = resposne as! NSDictionary
             let targetUserInfo = TargetUserInfo(dictionary: dictionay)
-            
+
             success(targetUserInfo)
         }, failure: { (task: URLSessionDataTask?, error: Error) -> Void in
             failure(error)
         })
     }
-    
-    
-    
-    
+
     func userTweetsTimeLine(userId: String, success: @escaping ([Tweet]) -> (), failure: @escaping (Error) -> ()) {
-        
-        
         let encodedUserIdString = userId.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
         let userTimelineURLString:String = LoginInfo.USER_TIMELINE_URL + encodedUserIdString!
-        
-        
-        
+
         get(userTimelineURLString, parameters: nil, progress: nil, success: { (task: URLSessionDataTask, resposne: Any?) -> Void in
-            
-            print("--------------->>")
-            print(resposne)
-            
             let dictionaries = resposne as! [NSDictionary]
             let tweets = Tweet.tweetWithArray(dictionaries: dictionaries)
             
@@ -137,15 +118,6 @@ class TwitterClient: BDBOAuth1SessionManager {
             failure(error)
         })
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     func mentionsTimeLine(success: @escaping ([Tweet]) -> (), failure: @escaping (Error) -> ()) {
         get(LoginInfo.MENTIONS_TIMELINE_URL, parameters: nil, progress: nil, success: { (task: URLSessionDataTask, resposne: Any?) -> Void in

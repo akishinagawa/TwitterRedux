@@ -13,30 +13,17 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBOutlet weak var menuTableView: UITableView!
     
     private var tweetsNavigationController:UIViewController!
-//    private var profileNavigationController:UIViewController!
-//    private var mentionsNavigationController:UIViewController!
-    
-//    var viewControllers:[UIViewController] = []
     var hamburgerViewController: HamburgerViewController!
     var titles = ["Home", "Profile", "Mentions"]
  
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         menuTableView.dataSource = self
         menuTableView.delegate = self
         
-//        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
-//        tweetsNavigationController = storyBoard.instantiateViewController(withIdentifier: "TweetsNavigationController")
-//        profileNavigationController = storyBoard.instantiateViewController(withIdentifier: "ProfileNavigationController")
-//        mentionsNavigationController = storyBoard.instantiateViewController(withIdentifier: "MentionsNavigationController")
-//        
-//        viewControllers.append(tweetsNavigationController)
-//        viewControllers.append(profileNavigationController)
-//        viewControllers.append(mentionsNavigationController)
-//        
-//        hamburgerViewController.contentViewController = tweetsNavigationController
+        menuTableView.rowHeight = UITableViewAutomaticDimension
+        menuTableView.estimatedRowHeight = 120
     }
 
     override func didReceiveMemoryWarning() {
@@ -45,31 +32,34 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return titles.count
+        return titles.count + 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = menuTableView.dequeueReusableCell(withIdentifier: "MenuTableViewCell") as! MenuTableViewCell
-        cell.menuTitleLabel.text = titles[indexPath.row]
+        let cell: UITableViewCell!
+        if indexPath.row == 0 {
+            cell = menuTableView.dequeueReusableCell(withIdentifier: "MenuProfileTableViewCell") as! MenuProfileTableViewCell
+
+            let currentUser = User.currentUser
+            (cell as! MenuProfileTableViewCell).userImage.setImageWith((currentUser?.profileUrl)!)
+            (cell as! MenuProfileTableViewCell).userNameLabel.text = currentUser?.name
+            (cell as! MenuProfileTableViewCell).userTagLineLabel.text = currentUser?.tagline
+        }
+        else {
+            cell = menuTableView.dequeueReusableCell(withIdentifier: "MenuTableViewCell") as! MenuTableViewCell
+            (cell as! MenuTableViewCell).menuTitleLabel.text = titles[indexPath.row - 1]
+        }
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         menuTableView.deselectRow(at: indexPath, animated: true)
         
-//        hamburgerViewController.contentViewController = viewControllers[indexPath.row]
-        hamburgerViewController.setTimelineMode(mode: titles[indexPath.row])
-        
-//        hamburgerViewController.contentViewController.setTimelineMode(mode: titles[indexPath.row])
+        if indexPath.row > 0 {
+            hamburgerViewController.setTimelineMode(mode: titles[indexPath.row - 1])
+        }
     }
-    
-    
-    
-    
-    
-    
     
     
     /*

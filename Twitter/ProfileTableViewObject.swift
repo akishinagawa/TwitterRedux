@@ -10,29 +10,30 @@ import UIKit
 
 class ProfileTableViewObject: NSObject, UITableViewDataSource, UITableViewDelegate {
 
-    
-    var tweets: [Tweet]?
     var targetUserInfo: TargetUserInfo!
-    
+    var tweets: [Tweet]?
     var tableView:UITableView!
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TweetsTableViewCell", for: indexPath) as! TweetsTableViewCell
-        cell.tweet = tweets?[indexPath.row]
-        
+        let cell:UITableViewCell!
+        if indexPath.row == 0 {
+            cell = tableView.dequeueReusableCell(withIdentifier: "ProfileTableViewCell", for: indexPath) as! ProfileTableViewCell
+            (cell as! ProfileTableViewCell).targetUserInfo = targetUserInfo
+        }
+        else {
+            cell = tableView.dequeueReusableCell(withIdentifier: "TweetsTableViewCell", for: indexPath) as! TweetsTableViewCell
+            (cell as! TweetsTableViewCell).tweet = tweets?[indexPath.row - 1]
+        }
+
         return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tweets != nil {
-            return (tweets?.count)!
+            return ((tweets?.count)! + 1)
         }
         else {
             return 0
         }
-    }
-    
-    
-    
-    
+    } 
 }
