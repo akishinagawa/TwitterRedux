@@ -227,7 +227,7 @@ Surf as many as possible in sacrid NorCal.</string>
             </objects>
             <point key="canvasLocation" x="32.799999999999997" y="843.32833583208401"/>
         </scene>
-        <!--Tweets View Controller-->
+        <!--Home-->
         <scene sceneID="8zQ-55-C8q">
             <objects>
                 <viewController storyboardIdentifier="TweetsViewController" id="Knc-rF-7e4" customClass="TweetsViewController" customModule="Twitter" customModuleProvider="target" sceneMemberID="viewController">
@@ -534,7 +534,7 @@ Surf as many as possible in sacrid NorCal.</string>
                             <constraint firstItem="Wj2-fQ-h3E" firstAttribute="leading" secondItem="YSU-M9-axc" secondAttribute="leading" id="vVU-qv-YoK"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="GUI-ay-w45">
+                    <navigationItem key="navigationItem" title="Home" id="GUI-ay-w45">
                         <barButtonItem key="leftBarButtonItem" title="Logout" id="oiI-TB-0CE">
                             <connections>
                                 <action selector="onLogoutButton:" destination="Knc-rF-7e4" id="vfB-LP-09E"/>
@@ -552,6 +552,7 @@ Surf as many as possible in sacrid NorCal.</string>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="tweetViewNavigationItem" destination="GUI-ay-w45" id="dXD-SS-qqI"/>
                         <outlet property="tweetsTableView" destination="Wj2-fQ-h3E" id="VAd-8T-Gr0"/>
                     </connections>
                 </viewController>

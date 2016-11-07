@@ -29,6 +29,7 @@ class TweetsViewController: UIViewController, TweetWriteViewControllerrDelegate,
     }
     
     @IBOutlet weak var tweetsTableView: UITableView!
+    @IBOutlet weak var tweetViewNavigationItem: UINavigationItem!
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -70,6 +71,8 @@ class TweetsViewController: UIViewController, TweetWriteViewControllerrDelegate,
 
             tweetsTableView.dataSource = homeTableViewObject
             tweetsTableView.delegate = homeTableViewObject
+            
+            tweetViewNavigationItem.title = "Home"
         }
         else if currentTimelineMode == .Profile {
             if profileTableViewObject == nil {
@@ -82,6 +85,8 @@ class TweetsViewController: UIViewController, TweetWriteViewControllerrDelegate,
             
             tweetsTableView.dataSource = profileTableViewObject
             tweetsTableView.delegate = profileTableViewObject
+            
+            tweetViewNavigationItem.title = "Profile"
         }
         else if currentTimelineMode == .Mentions {
             
@@ -95,6 +100,8 @@ class TweetsViewController: UIViewController, TweetWriteViewControllerrDelegate,
             
             tweetsTableView.dataSource = mentionsTableViewObject
             tweetsTableView.delegate = mentionsTableViewObject
+            
+            tweetViewNavigationItem.title = "Mentions"
         }
 
         loadTweetData()
