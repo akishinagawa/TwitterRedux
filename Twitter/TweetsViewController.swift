@@ -22,22 +22,15 @@ class TweetsViewController: UIViewController, TweetWriteViewControllerrDelegate 
     var homeTableViewObject: HomeTabelViewObject!
     var profileTableViewObject: ProfileTableViewObject!
     var mentionsTableViewObject: MentionsTableViewObject!
-    
-    
-    
+
     var currentTimelineMode:TimelineMode! {
         didSet {
             updateTimeline()
         }
     }
     
-    
-    
-    
-    
-    
-    
     @IBOutlet weak var tweetsTableView: UITableView!
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -47,17 +40,6 @@ class TweetsViewController: UIViewController, TweetWriteViewControllerrDelegate 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        currentTimelineMode = .Home
-        
-        
-
-        
-        
-//        homeTableViewObject.loadTweetData()
-        
-        
-        
-        
         tweetsTableView.rowHeight = UITableViewAutomaticDimension
         tweetsTableView.estimatedRowHeight = 120
         
@@ -65,25 +47,21 @@ class TweetsViewController: UIViewController, TweetWriteViewControllerrDelegate 
         self.refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refreshControlAction(refreshControl:)), for: UIControlEvents.valueChanged)
         tweetsTableView.insertSubview(refreshControl, at: 0)
-        
- 
- 
- 
+
+        // Set Home as default
+        currentTimelineMode = .Home
         loadTweetData()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     @IBAction func onLogoutButton(_ sender: AnyObject) {
-        
         TwitterClient.sharedInstance?.logout()
     }
 
-    
-    
+
     func updateTimeline () {
         if currentTimelineMode == .Home {
             if homeTableViewObject == nil {
@@ -97,7 +75,6 @@ class TweetsViewController: UIViewController, TweetWriteViewControllerrDelegate 
             tweetsTableView.delegate = homeTableViewObject
         }
         else if currentTimelineMode == .Profile {
-            
             if profileTableViewObject == nil {
                 profileTableViewObject = ProfileTableViewObject()
             }
@@ -107,8 +84,6 @@ class TweetsViewController: UIViewController, TweetWriteViewControllerrDelegate 
             
             tweetsTableView.dataSource = profileTableViewObject
             tweetsTableView.delegate = profileTableViewObject
-            
-            
         }
         else if currentTimelineMode == .Mentions {
             
@@ -126,15 +101,7 @@ class TweetsViewController: UIViewController, TweetWriteViewControllerrDelegate 
         loadTweetData()
     }
     
-    
-    
-
-    
-    
     func loadTweetData() {
-        
-        
-        
         if currentTimelineMode == .Home {
             TwitterClient.sharedInstance?.homeTimeLine(success: { (tweets: [Tweet]) -> () in
                 self.tweets = tweets
