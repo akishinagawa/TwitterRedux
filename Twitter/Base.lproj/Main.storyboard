@@ -181,10 +181,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b63-X6-ySb">
-                                                    <rect key="frame" x="104" y="34" width="255" height="39"/>
+                                                    <rect key="frame" x="104" y="34" width="223" height="50.5"/>
                                                     <string key="text">Born in Osaka, Living in SF.
 Surf as many as possible in sacrid NorCal.</string>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -195,7 +195,7 @@ Surf as many as possible in sacrid NorCal.</string>
                                                 <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="XNb-R5-6Wn" secondAttribute="trailing" constant="8" id="Rmt-2u-9Xj"/>
                                                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="yyT-ta-G2b" secondAttribute="bottom" constant="4" id="VAK-IQ-PXb"/>
                                                 <constraint firstItem="yyT-ta-G2b" firstAttribute="leading" secondItem="Phy-Fb-a93" secondAttribute="leading" constant="8" id="cWS-wb-FFV"/>
-                                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="b63-X6-ySb" secondAttribute="trailing" constant="8" id="crd-9N-zSJ"/>
+                                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="b63-X6-ySb" secondAttribute="trailing" constant="30" id="crd-9N-zSJ"/>
                                                 <constraint firstItem="yyT-ta-G2b" firstAttribute="top" secondItem="Phy-Fb-a93" secondAttribute="top" constant="10" id="fhG-9W-eYR"/>
                                                 <constraint firstItem="b63-X6-ySb" firstAttribute="top" secondItem="XNb-R5-6Wn" secondAttribute="bottom" constant="4" id="lkS-7i-XMn"/>
                                                 <constraint firstItem="b63-X6-ySb" firstAttribute="leading" secondItem="yyT-ta-G2b" secondAttribute="trailing" constant="16" id="oDS-Wt-gmM"/>
